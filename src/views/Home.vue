@@ -1,10 +1,10 @@
 <template>
     <Header />
     <div>
-        <h2>Liste :</h2>
+        <h2>Jeux :</h2>
         <ul>
             <li>
-                <router-link :to="{ name: 'memory' }">Memory</router-link>
+                <router-link :to="{ name: 'memoji' }">Memoji</router-link>
             </li>
         </ul>
     </div>

@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import GameConfiguration from '@/components/Memory/GameConfiguration.vue';
-import Game from '@/components/Memory/Game.vue';
+import GameConfiguration from '@/components/Memoji/GameConfiguration.vue';
+import Game from '@/components/Memoji/Game.vue';
 
 export default {
-  name: 'Memory',
+  name: 'Memoji',
   components: {
     GameConfiguration, Game,
   },

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import SelectDifficulty from '@/components/Memory/SelectDifficulty.vue';
+import SelectDifficulty from '@/components/Memoji/SelectDifficulty.vue';
 
 export default {
     name: 'GameConfiguration',

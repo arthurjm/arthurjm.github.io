@@ -1,11 +1,12 @@
 <template>
     <div class="game">
-        <h2>Partie</h2>
+        <h2>Partie en cours</h2>
+        <span>Nombre de coups : {{ actionsCount }}</span>
         <table class="board">
             <tr v-for="(line, w) in board" :key="w">
                 <td v-for="(cell, h) in line" :key="h" class="card" @click="flipCard" :w="w" :h="h">
                     <span v-if="cell.display">{{ cell.emoji }}</span>
-                    <span v-else>?</span>
+                    <span v-else>❓</span>
                 </td>
             </tr>
         </table>
@@ -14,6 +15,7 @@
 
 <script>
 const boardSizes = {
+  
     1: [5, 4],
     2: [6, 5],
     3: [7, 6],
@@ -38,6 +40,7 @@ export default {
             board: [],
             flipped: null,
             wait: false,
+            actionsCount: 0,
         }
     },
     methods: {
@@ -67,6 +70,7 @@ export default {
             cell.display = true;
 
             if (this.flipped) {
+                this.actionsCount++;
                 if (this.flipped.emoji === cell.emoji) {
                     this.flipped = null;
                 } else {
@@ -116,7 +120,7 @@ export default {
 .card {
     cursor: pointer;
     border: 1px solid #333;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
 </style>

@@ -15,10 +15,10 @@ const routes = [
             import('../views/HelloWorld.vue')
     },
     {
-        path: '/memory',
-        name: 'memory',
+        path: '/memoji',
+        name: 'memoji',
         component: () =>
-            import('../views/Memory.vue')
+            import('../views/Memoji.vue')
     },
 ]
 
