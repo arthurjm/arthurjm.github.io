@@ -1,7 +1,7 @@
 <template>
     <Header />
     <div>
-        <h2>Liste</h2>
+        <h2>Liste :</h2>
         <ul>
             <li>
                 <router-link :to="{ name: 'memory' }">Memory</router-link>
