@@ -10,6 +10,7 @@
                 </td>
             </tr>
         </table>
+        <button @click="resetGame">Recommencer</button>
     </div>
 </template>
 
@@ -33,6 +34,7 @@ const emojisList = [
 export default {
     name: 'Game',
     props: ['params'],
+    emits: ['reset'],
     components: {
     },
     data: function () {
@@ -85,6 +87,10 @@ export default {
             } else {
                 this.flipped = cell
             }
+        },
+        resetGame(){
+          console.log('reset game')
+          this.$emit('reset')
         }
     },
     created() {
