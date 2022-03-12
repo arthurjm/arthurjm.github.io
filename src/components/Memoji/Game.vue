@@ -1,7 +1,10 @@
 <template>
     <div class="game">
-        <h2>Partie en cours</h2>
+        <h2 v-if="isGameOver" class="success">Victoire !</h2>
+        <h2 v-else>Partie en cours</h2>
         <span>Nombre de coups : {{ actionsCount }}</span>
+        <br>
+        <Timer :timerStop="isGameOver"/>
         <table class="board">
             <tr v-for="(line, w) in board" :key="w">
                 <td v-for="(cell, h) in line" :key="h" class="card" @click="flipCard" :w="w" :h="h">
@@ -15,6 +18,8 @@
 </template>
 
 <script>
+import Timer from '@/components/Memoji/Timer.vue';
+
 const boardSizes = {
   
     1: [5, 4],
@@ -36,6 +41,7 @@ export default {
     props: ['params'],
     emits: ['reset'],
     components: {
+      Timer,
     },
     data: function () {
         return {
@@ -43,7 +49,15 @@ export default {
             flipped: null,
             wait: false,
             actionsCount: 0,
+            pairFound: 0,
+            pairNb: 0,
+            start: null,
         }
+    },
+    computed: {
+      isGameOver() {
+        return this.pairFound === this.pairNb;
+      }
     },
     methods: {
         // Fisher–Yates shuffle
@@ -75,6 +89,7 @@ export default {
                 this.actionsCount++;
                 if (this.flipped.emoji === cell.emoji) {
                     this.flipped = null;
+                    this.pairFound++;
                 } else {
                     this.wait = true
                     setTimeout(() => {
@@ -96,6 +111,7 @@ export default {
     created() {
         const boardSize = boardSizes[this.params.difficulty];
         const nbElements = boardSize[0] * boardSize[1] / 2;
+        this.pairNb = nbElements;
 
         let emojis = this.shuffle(emojisList).slice(0, nbElements);
         emojis = this.shuffle(emojis.concat(emojis)); // double elements
@@ -109,6 +125,7 @@ export default {
                 };
             }
         }
+        this.start = new Date()
     }
 };
 </script>
@@ -128,5 +145,9 @@ export default {
     border: 1px solid #333;
     width: 35px;
     height: 35px;
+}
+
+.success {
+  color: green;
 }
 </style>
