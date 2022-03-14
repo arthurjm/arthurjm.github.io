@@ -104,7 +104,6 @@ export default {
             }
         },
         resetGame(){
-          console.log('reset game')
           this.$emit('reset')
         }
     },
@@ -136,13 +135,18 @@ export default {
 }
 
 .board {
+    padding: 5px;
     margin-left: auto;
     margin-right: auto;
+    border-spacing: 4px;
+    border-collapse: separate;
 }
 
 .card {
     cursor: pointer;
-    border: 1px solid #333;
+    border: 1px solid var(--border-color-primary);
+    padding: 2px;
+    background-color: var(--background-color-secondary);
     width: 35px;
     height: 35px;
 }

@@ -1,7 +1,7 @@
 <template>
   <h1>Jeu de mémoire</h1>
   <GameConfiguration v-if="!isOngoing" @launchGame="launchGame" />
-  <Game v-if="isOngoing" :params="params" @reset="resetGame"/>
+  <Game v-else :params="params" @reset="resetGame"/>
 </template>
 
 <script>
@@ -25,7 +25,6 @@ export default {
       this.params = params
     },
     resetGame(){
-      console.log('reset memoji')
       this.isOngoing = false
     }
   },

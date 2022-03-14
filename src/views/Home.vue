@@ -31,4 +31,8 @@ export default {
 div {
     text-align: left;
 }
+
+a {
+    color: var(--text-link-color);
+}
 </style>
