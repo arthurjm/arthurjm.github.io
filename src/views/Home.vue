@@ -1,35 +1,31 @@
 <template>
-    <Header />
-    <div>
-        <h2>Jeux :</h2>
-        <ul>
-            <li>
-                <router-link :to="{ name: 'memoji' }">Memoji</router-link>
-            </li>
-        </ul>
+    <div id="home">
+        <div>
+            <h2>Jeux :</h2>
+            <ul>
+                <li>
+                    <router-link :to="{ name: 'memory' }">Memory</router-link>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
-
 export default {
     name: 'Home',
-    components: {
-        Header,
-    },
-    data: function () {
-        return {
-        }
-    },
-    methods: {
-    },
 };
 </script>
 
 <style scoped>
-div {
-    text-align: left;
+#home {
+    display: flex;
+    justify-content: center;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
 }
 
 a {

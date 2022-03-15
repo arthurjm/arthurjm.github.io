@@ -9,7 +9,9 @@
 <script>
 export default {
   name: 'SelectDifficulty',
+
   props: ['modelValue'],
+  
   emits: ['update:modelValue']
 }
 </script>

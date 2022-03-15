@@ -19,6 +19,18 @@ export default {
 		};
 	},
 
+	created() {
+		const localPreference = localStorage.getItem("user-theme");
+		if (localPreference) {
+			this.setTheme(localPreference);
+		} else {
+			const hasDarkPreference = window.matchMedia(
+				"(prefers-color-scheme: dark)"
+			).matches;
+			this.setTheme(hasDarkPreference ? "dark-theme" : "light-theme");
+		}
+	},
+
 	methods: {
 		setTheme(theme) {
 			localStorage.setItem("user-theme", theme);
@@ -33,18 +45,6 @@ export default {
 				this.setTheme("light-theme");
 			}
 		},
-	},
-
-	created() {
-		const localPreference = localStorage.getItem("user-theme");
-		if (localPreference) {
-			this.setTheme(localPreference);
-		} else {
-			const hasDarkPreference = window.matchMedia(
-				"(prefers-color-scheme: dark)"
-			).matches;
-			this.setTheme(hasDarkPreference ? "dark-theme" : "light-theme");
-		}
 	},
 };
 </script>
@@ -80,7 +80,7 @@ export default {
 
 .switch-toggle {
 	position: absolute;
-	background-color: var(--background-color-primary);
+	background-color: var(--background-primary-color);
 	border-radius: 50%;
 	top: calc(var(--element-size) * 0.07);
 	left: calc(var(--element-size) * 0.07);
@@ -100,5 +100,13 @@ export default {
 
 .light-icon {
 	color: #e0d318;
+}
+
+#checkbox:checked + .switch-label > .dark-icon {
+	visibility: hidden;
+}
+
+#checkbox:not(:checked) + .switch-label > .light-icon {
+	visibility: hidden;
 }
 </style>

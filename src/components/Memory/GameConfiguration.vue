@@ -5,19 +5,23 @@
 </template>
 
 <script>
-import SelectDifficulty from '@/components/Memoji/SelectDifficulty.vue';
+import SelectDifficulty from '@/components/Memory/SelectDifficulty.vue';
 
 export default {
     name: 'GameConfiguration',
+    
     emits: ['launchGame'],
+
     components: {
         SelectDifficulty,
     },
+
     data: function () {
         return {
             difficulty: 1,
         }
     },
+
     methods: {
         launchGame() {
             this.$emit('launchGame', {
@@ -27,6 +31,3 @@ export default {
     },
 };
 </script>
-
-<style>
-</style>

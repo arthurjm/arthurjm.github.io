@@ -1,24 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
 
 const routes = [
     {
         path: '/',
         name: 'home',
-        component: Home,
+        component: () => {
+            return import('../views/Home.vue');
+        },
         props: true
     },
     {
         path: '/helloworld',
         name: 'helloworld',
-        component: () =>
-            import('../views/HelloWorld.vue')
+        component: () => {
+            return import('../views/HelloWorld.vue');
+        }
     },
     {
-        path: '/memoji',
-        name: 'memoji',
-        component: () =>
-            import('../views/Memoji.vue')
+        path: '/memory',
+        name: 'memory',
+        component: () => {
+            return import('../views/Memory.vue');
+        }
     },
 ]
 
