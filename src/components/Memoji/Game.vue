@@ -132,6 +132,7 @@ export default {
 <style>
 .game {
     user-select: none;
+    touch-action: manipulation;
 }
 
 .board {
