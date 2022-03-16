@@ -3,14 +3,14 @@
 </template>
 
 <script>
-function formatTime(t) {
-  return `${t > 9 ? t : '0' + t}`;
-}
+import { formatTimeZero } from '@/js/time.js';
 
 export default {
   name: 'Timer',
 
   props: ['timerStop'],
+
+  emits: ['timer'],
 
   data: function() {
     return {
@@ -19,15 +19,19 @@ export default {
     }
   },
 
-  
   created() {
     this.intervalId = setInterval(() => {
       if (this.timerStop) {
         clearInterval(this.intervalId);
       } else {
         this.ellapsed++;
+        this.$emit('timer', this.ellapsed);
       }
     }, 1000)
+  },
+
+  beforeUnmount() {
+    clearInterval(this.intervalId);
   },
 
   computed: {
@@ -35,7 +39,7 @@ export default {
       const minutes = Math.floor(this.ellapsed / 60);
       const seconds = this.ellapsed % 60;
       
-      return `${formatTime(minutes)}:${formatTime(seconds)}`;
+      return `${formatTimeZero(minutes)}:${formatTimeZero(seconds)}`;
     },
   }
 }

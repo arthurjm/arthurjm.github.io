@@ -4,7 +4,7 @@
         <h2 v-else>Partie en cours</h2>
         <span>Nombre de coups : {{ actionsCount }}</span>
         <br />
-        <Timer :timerStop="isGameOver" />
+        <Timer :timerStop="isGameOver" @timer="setTimer" />
         <table class="board">
             <tr v-for="(line, w) in board" :key="w">
                 <td v-for="(cell, h) in line" :key="h" class="card" @click="flipCard" :w="w" :h="h">
@@ -52,9 +52,9 @@ export default {
             flipped: null,
             wait: false,
             actionsCount: 0,
+            timer: 0,
             pairFound: 0,
             pairNb: 0,
-            start: null,
         }
     },
 
@@ -75,13 +75,16 @@ export default {
                 };
             }
         }
-        this.start = new Date();
     },
 
     computed: {
         isGameOver() {
-            return this.pairFound === this.pairNb;
-        }
+            if (this.pairFound === this.pairNb) {
+                this.onGameOver();
+                return true;
+            }
+            return false;
+        },
     },
 
     methods: {
@@ -126,7 +129,42 @@ export default {
         },
 
         resetGame() {
-            this.$emit('reset')
+            this.$emit('reset');
+        },
+
+        setTimer(timer) {
+            this.timer = timer;
+        },
+
+        onGameOver() {
+            this.setScore();
+        },
+
+        setScore() {
+            let value = localStorage.getItem('memory-score');
+            let scores = (value && JSON.parse(value)) || {};
+
+            const score = {
+                time: this.timer,
+                actions: this.actionsCount,
+                date: Date()
+            }
+
+            const difficulty = this.params.difficulty;
+
+            let arr = scores[difficulty] || []
+
+            arr.push(score);
+            arr.sort(function (a, b) {
+                if (a.time === b.time) {
+                    return a.actions - b.actions;
+                }
+                return a.time - b.time;
+            });
+
+            scores[difficulty] = arr.slice(0, 10);
+
+            localStorage.setItem('memory-score', JSON.stringify(scores));
         }
     },
 };
