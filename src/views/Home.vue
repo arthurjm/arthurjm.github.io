@@ -4,7 +4,10 @@
             <h2>Jeux :</h2>
             <ul>
                 <li>
-                    <router-link :to="{ name: 'memory' }">Memory</router-link>
+                    <router-link :to="{ name: 'Memory' }">Memory</router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'Rythm' }">Rythm</router-link>
                 </li>
             </ul>
         </div>
@@ -19,13 +22,16 @@ export default {
 
 <style scoped>
 #home {
-    display: flex;
-    justify-content: center;
+    margin: auto;
 }
 
 ul {
     list-style: none;
     padding: 0;
+}
+
+li {        
+    margin: 10px;
 }
 
 a {

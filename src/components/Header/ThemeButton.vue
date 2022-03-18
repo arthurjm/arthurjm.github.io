@@ -51,11 +51,10 @@ export default {
 
 <style scoped>
 #themeButton {
-	/* position: absolute;
-	top: 1%;
-	right: 1%; */
 	text-align: -webkit-right;
 	user-select: none;
+	position: absolute;
+	right: 1%;
 }
 
 .switch-checkbox {

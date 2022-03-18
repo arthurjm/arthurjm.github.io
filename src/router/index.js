@@ -3,25 +3,37 @@ import { createRouter, createWebHistory } from 'vue-router'
 const routes = [
     {
         path: '/',
-        name: 'home',
+        name: 'Home',
         component: () => {
-            return import('../views/Home.vue');
+            return import('@/views/Home.vue');
         },
         props: true
     },
     {
         path: '/helloworld',
-        name: 'helloworld',
+        name: 'HelloWorld',
         component: () => {
-            return import('../views/HelloWorld.vue');
+            return import('@/views/HelloWorld.vue');
         }
     },
     {
         path: '/memory',
-        name: 'memory',
+        name: 'Memory',
         component: () => {
-            return import('../views/Memory.vue');
+            return import('@/views/Memory.vue');
         }
+    },
+    {
+        path: '/rythm',
+        name: 'Rythm',
+        component: () => {
+            return import('@/views/Rythm.vue');
+        }
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: 'NotFound',
+        redirect: '/'
     },
 ]
 
