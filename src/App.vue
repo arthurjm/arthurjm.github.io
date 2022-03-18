@@ -26,6 +26,7 @@ export default {
   --text-primary-color: #222;
   --background-primary-color: #ebebeb;
   --background-secondary-color: #fafafa;
+  --background-tertiary-color: #bdbdbd;
   --border-primary-color: #333;
   --accent-color: #cacaca;
 }
@@ -34,6 +35,7 @@ export default {
   --text-primary-color: #ddd;
   --background-primary-color: #1e1e1e;
   --background-secondary-color: #2d2d30;
+  --background-tertiary-color: #4d4d4d;
   --border-primary-color: #ebebeb;
   --accent-color: #3f3f3f;
 }
@@ -41,6 +43,8 @@ export default {
 body {
   background-color: var(--background-primary-color);
   color: var(--text-primary-color);
+  margin: 0;
+  padding: 0;
 }
 
 #app {
