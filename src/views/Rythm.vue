@@ -1,5 +1,9 @@
 <template>
   <div id="rythm">
+    <div id="score">
+      <p>Score : {{ score }}</p>
+      <p>Multiplicateur : {{ multiplier }}</p>
+    </div>
     <div id="game" ref="game">
       <div id="notes">
         <div
@@ -71,6 +75,8 @@ export default {
       notes: new Map(),
       maxNotes: 3,
       id: 0,
+      score: 0,
+      multiplier: 1
     };
   },
 
@@ -96,6 +102,7 @@ export default {
 
         const notes = document.getElementsByClassName("note " + color);
 
+        let intersect = false;
         for (const note of notes) {
           const noteRect = note.getBoundingClientRect();
           const noteRectY1 = noteRect.y;
@@ -110,8 +117,11 @@ export default {
           ) {
             const key = parseInt(note.dataset.key);
             this.notes.delete(key);
+            intersect = true;
           }
         }
+
+        this.updateScore(intersect);
 
         // display key
         this.colors[color].display = true;
@@ -127,7 +137,9 @@ export default {
       this.id++;
       this.notes.set(key, color);
       setTimeout(() => {
-        this.notes.delete(key);
+        if (this.notes.delete(key)) {
+          this.updateScore(false);
+        }
       }, 4000);
     },
 
@@ -150,6 +162,15 @@ export default {
       const colors = Object.keys(this.colors);
       return colors[Math.floor(Math.random() * colors.length)];
     },
+
+    updateScore(intersect) {
+      if (intersect) {
+        if (this.multiplier < 10) { this.multiplier++; }
+        this.score += 10 * this.multiplier;
+      } else {
+        this.multiplier = 1;
+        this.score -= 5;
+      }
     },
   },
 };
