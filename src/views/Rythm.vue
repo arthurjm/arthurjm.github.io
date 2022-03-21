@@ -1,26 +1,34 @@
 <template>
-  <div id="game">
-    <div id="notes">
-      <div v-for="[k, c] in notes" :key="k" :class="c" class="note"></div>
-    </div>
+  <div id="rythm">
+    <div id="game" ref="game">
+      <div id="notes">
+        <div
+          v-for="[k, c] in notes"
+          :key="k"
+          :class="c"
+          class="note"
+          :data-key="k"
+        ></div>
+      </div>
 
-    <div id="keys">
-      <div class="line"></div>
-      <div v-for="(color, c) in colors" :key="c" v-show="color.display" :class="c" class="key"></div>
-    </div>
+      <div id="keys">
+        <div class="line" ref="line"></div>
+        <div
+          v-for="(color, c) in colors"
+          :key="c"
+          v-show="color.display"
+          :class="c"
+          class="key"
+        ></div>
+      </div>
 
-    <div id="separators">
-      <div v-for="n in Object.keys(colors).length - 1" :key="n" class="separator"></div>
-    </div>
-  </div>
-  <div v-show="false" id="informations">
-    <div v-show="false">
-      <h2>Colors</h2>
-      <div v-for="(color, i) in colors" :key="i">{{ i }} - {{ color }}</div>
-    </div>
-    <div v-show="true">
-      <h2>Map</h2>
-      <div v-for="[k, c] in notes" :key="k">{{ k }} {{ c }}</div>
+      <div id="separators">
+        <div
+          v-for="n in Object.keys(colors).length - 1"
+          :key="n"
+          class="separator"
+        ></div>
+      </div>
     </div>
   </div>
 </template>
@@ -28,40 +36,46 @@
 <script>
 const colors = {
   red: {
-    code: 'KeyQ',
-    display: false
+    code: "KeyQ",
+    display: false,
+    notes: [],
   },
   blue: {
-    code: 'KeyW',
-    display: false
+    code: "KeyW",
+    display: false,
+    notes: [],
   },
   green: {
-    code: 'KeyE',
-    display: false
+    code: "KeyE",
+    display: false,
+    notes: [],
   },
   yellow: {
-    code: 'KeyO',
-    display: false
+    code: "KeyO",
+    display: false,
+    notes: [],
   },
   purple: {
-    code: 'KeyP',
-    display: false
-  }
-}
+    code: "KeyP",
+    display: false,
+    notes: [],
+  },
+};
 
 export default {
-  name: 'Rythm',
+  name: "Rythm",
 
   data: function () {
     return {
       colors: {},
       notes: new Map(),
-      maxNotes: 3
-    }
+      maxNotes: 3,
+      id: 0,
+    };
   },
 
   created() {
-    document.addEventListener('keydown', (event) => {
+    document.addEventListener("keydown", (event) => {
       for (const color in colors) {
         if (colors[color].code === event.code) {
           this.pressColor(color);
@@ -70,27 +84,55 @@ export default {
     });
 
     this.colors = colors;
-    this.partition();
+    this.partition(60*1000);
   },
 
   methods: {
     pressColor(color) {
-      this.colors[color].display = true;
-      setTimeout(() => {
-        this.colors[color].display = false;
-      }, 100);
+      if (!this.colors[color].display) {
+        const lineRect = this.$refs.line.getBoundingClientRect();
+        const lineRectY1 = lineRect.y;
+        const lineRectY2 = lineRect.y + lineRect.height;
+
+        const notes = document.getElementsByClassName("note " + color);
+
+        for (const note of notes) {
+          const noteRect = note.getBoundingClientRect();
+          const noteRectY1 = noteRect.y;
+          const noteRectY2 = noteRect.y + noteRect.height;
+
+          // if key intersect note
+          if (
+            !(
+              (noteRectY2 < lineRectY1 && noteRectY2 < lineRectY2) ||
+              (noteRectY1 > lineRectY1 && noteRectY1 > lineRectY2)
+            )
+          ) {
+            const key = parseInt(note.dataset.key);
+            this.notes.delete(key);
+          }
+        }
+
+        // display key
+        this.colors[color].display = true;
+        setTimeout(() => {
+          this.colors[color].display = false;
+        }, 100);
+      }
     },
 
     addNote(color) {
-      const key = performance.now();
-      this.notes.set(key, color)
+      // const key = performance.now();
+      const key = this.id;
+      this.id++;
+      this.notes.set(key, color);
       setTimeout(() => {
         this.notes.delete(key);
       }, 4000);
     },
 
-    partition() {
-      setInterval(() => {
+    partition(time) {
+      const idInterval = setInterval(() => {
         let notesNumber = Math.ceil(Math.random() * this.maxNotes);
         while (notesNumber > 0) {
           const color = this.randomColor();
@@ -98,11 +140,16 @@ export default {
           --notesNumber;
         }
       }, 1000);
+
+      setTimeout(() => {
+        clearInterval(idInterval);
+      }, time)
     },
 
     randomColor() {
       const colors = Object.keys(this.colors);
       return colors[Math.floor(Math.random() * colors.length)];
+    },
     },
   },
 };
@@ -193,7 +240,7 @@ export default {
 .key {
   position: absolute;
   top: calc(var(--game-height) * 0.85);
-  height: var(--line-width);
+  height: calc(var(--line-width) * 3);
 }
 
 .line {
@@ -213,7 +260,7 @@ export default {
     top: 0;
   }
   to {
-    top: var(--game-height);
+    top: calc(var(--game-height) - var(--note-height));
   }
 }
 </style>
