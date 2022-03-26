@@ -1,18 +1,41 @@
 <template>
-    <Header />
-    <router-view></router-view>
+  <Header />
+  <router-view v-slot="{ Component }">
+    <component :is="Component" />
+  </router-view>
 </template>
 
 <script>
-import Header from '@/components/Header/Header.vue';
+import Header from "@/components/Header/Header.vue";
+import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    Header
+    Header,
   },
-}
+
+  data: function() {
+    return {
+      controlsHandler
+    }
+  },
+
+  mounted() {
+    document.addEventListener("keydown", this.keydown);
+  },
+
+  beforeUnmount() {
+    document.removeEventListener("keydown", this.keydown);
+  },
+
+  methods: {
+    keydown(event) {
+      controlsHandler.event(event.key);
+    }
+  }
+};
 </script>
 
 <style>

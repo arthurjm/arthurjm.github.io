@@ -15,13 +15,13 @@
         ></div>
       </div>
 
-      <div id="keys">
+      <div id="keys" ref="keys" tabindex="0">
         <div class="line" ref="line"></div>
         <div
-          v-for="(color, c) in colors"
-          :key="c"
-          v-show="color.display"
-          :class="c"
+          v-for="(display, color) in colors"
+          :key="color"
+          v-show="display"
+          :class="color"
           class="key"
         ></div>
       </div>
@@ -38,59 +38,45 @@
 </template>
 
 <script>
-const colors = {
-  red: {
-    code: "KeyQ",
-    display: false,
-    notes: [],
-  },
-  blue: {
-    code: "KeyW",
-    display: false,
-    notes: [],
-  },
-  green: {
-    code: "KeyE",
-    display: false,
-    notes: [],
-  },
-  yellow: {
-    code: "KeyO",
-    display: false,
-    notes: [],
-  },
-  purple: {
-    code: "KeyP",
-    display: false,
-    notes: [],
-  },
-};
+import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
   name: "Rythm",
 
   data: function () {
     return {
-      colors: {},
+      colors: {
+        red: false,
+        blue: false,
+        green: false,
+        yellow: false,
+        purple: false
+      },
       notes: new Map(),
       maxNotes: 3,
       id: 0,
       score: 0,
-      multiplier: 1
+      multiplier: 1,
+      actions: {},
+      keys: [],
+      controlsHandler,
+      partititionId: 0,
     };
   },
 
   created() {
-    document.addEventListener("keydown", (event) => {
-      for (const color in colors) {
-        if (colors[color].code === event.code) {
-          this.pressColor(color);
-        }
-      }
-    });
+    controlsHandler.addControl('rythm', 'redBtn', {key: 'a', function: this.pressColor, arguments: 'red'});
+    controlsHandler.addControl('rythm', 'blueBtn', {key: 'z', function: this.pressColor, arguments: 'blue'});
+    controlsHandler.addControl('rythm', 'greenBtn', {key: 'e', function: this.pressColor, arguments: 'green'});
+    controlsHandler.addControl('rythm', 'yellowBtn', {key: 'o', function: this.pressColor, arguments: 'yellow'});
+    controlsHandler.addControl('rythm', 'purpleBtn', {key: 'p', function: this.pressColor, arguments: 'purple'});
 
-    this.colors = colors;
-    this.partition(60*1000);
+    this.partition(60 * 1000);
+  },
+
+  beforeUnmount() {
+    clearInterval(this.partititionId);
+    controlsHandler.removeCategory('rythm');
   },
 
   methods: {
@@ -124,9 +110,9 @@ export default {
         this.updateScore(intersect);
 
         // display key
-        this.colors[color].display = true;
+        this.colors[color] = true;
         setTimeout(() => {
-          this.colors[color].display = false;
+          this.colors[color] = false;
         }, 100);
       }
     },
@@ -144,7 +130,7 @@ export default {
     },
 
     partition(time) {
-      const idInterval = setInterval(() => {
+      this.partititionId = setInterval(() => {
         let notesNumber = Math.ceil(Math.random() * this.maxNotes);
         while (notesNumber > 0) {
           const color = this.randomColor();
@@ -154,8 +140,8 @@ export default {
       }, 1000);
 
       setTimeout(() => {
-        clearInterval(idInterval);
-      }, time)
+        clearInterval(this.partititionId);
+      }, time);
     },
 
     randomColor() {
@@ -165,7 +151,9 @@ export default {
 
     updateScore(intersect) {
       if (intersect) {
-        if (this.multiplier < 10) { this.multiplier++; }
+        if (this.multiplier < 10) {
+          this.multiplier++;
+        }
         this.score += 10 * this.multiplier;
       } else {
         this.multiplier = 1;
