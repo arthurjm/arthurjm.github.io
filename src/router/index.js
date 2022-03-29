@@ -31,6 +31,13 @@ const routes = [
         }
     },
     {
+        path: '/image',
+        name: 'Image',
+        component: () => {
+            return import('@/views/Image.vue');
+        }
+    },
+    {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         redirect: '/'

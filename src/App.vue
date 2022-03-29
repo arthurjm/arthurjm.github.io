@@ -51,6 +51,7 @@ export default {
   --background-secondary-color: #fafafa;
   --background-tertiary-color: #bdbdbd;
   --border-primary-color: #333;
+  --button-background-color: #61a5ff;
   --accent-color: #cacaca;
 }
 
@@ -60,6 +61,7 @@ export default {
   --background-secondary-color: #2d2d30;
   --background-tertiary-color: #4d4d4d;
   --border-primary-color: #ebebeb;
+  --button-background-color: #215292;
   --accent-color: #3f3f3f;
 }
 
@@ -75,5 +77,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+.button {
+  background-color: var(--button-background-color);
+  border: 2px solid var(--border-primary-color);
+  padding: 10px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
 }
 </style>

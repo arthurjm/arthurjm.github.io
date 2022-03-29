@@ -10,6 +10,14 @@
           <router-link :to="{ name: 'Rythm' }">Rythm</router-link>
         </li>
       </ul>
+
+      
+      <h2>Outils :</h2>
+      <ul>
+        <li>
+          <router-link :to="{ name: 'Image' }">Traitement d'images</router-link>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
