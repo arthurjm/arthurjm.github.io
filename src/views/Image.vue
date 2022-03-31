@@ -36,6 +36,7 @@
       @dragleave="dragLeave"
       @drag="true"
       :class="{ 'drag-over': isOver }"
+      class="box"
     >
       <label for="input-image" class="button">Ouvrir un fichier</label>
       <input
@@ -229,22 +230,8 @@ export default {
   position: relative;
 }
 
-#open-image {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 500px;
-  height: 200px;
-  margin: auto;
-  border: 3px solid var(--border-primary-color);
-}
-
-#open-image:not(.drag-over) {
-  background-color: var(--background-secondary-color);
-}
-
 .drag-over {
-  background-color: var(--success-color);
+  background-color: var(--success-color) !important;
 }
 
 #open-image > * {

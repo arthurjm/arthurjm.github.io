@@ -1,27 +1,35 @@
 <template>
   <h1>Jeu de mémoire</h1>
-  <GameConfiguration v-if="!isOngoing" @launchGame="launchGame" />
-  <Game v-else :params="params" @reset="resetGame"/>
+  <Configuration v-if="!isOngoing" @launchGame="launchGame" :config="config" />
+  <Game v-else :params="params" @reset="resetGame" />
   <Scoreboard v-if="!isOngoing" />
 </template>
 
 <script>
-import Game from '@/components/Memory/Game.vue';
-import GameConfiguration from '@/components/Memory/GameConfiguration.vue';
-import Scoreboard from '@/components/Memory/Scoreboard.vue';
+import Configuration from "@/components/Configuration.vue";
+import Game from "@/components/Memory/Game.vue";
+import Scoreboard from "@/components/Memory/Scoreboard.vue";
 
 export default {
-  name: 'Memory',
+  name: "Memory",
 
   components: {
-    Game, GameConfiguration, Scoreboard,
+    Game,
+    Configuration,
+    Scoreboard,
   },
 
   data: function () {
     return {
       isOngoing: false,
-      params: {}
-    }
+      config: {
+        difficulty: {
+          name: "Difficulté",
+          choices: ["Facile", "Intermédiaire", "Difficile"],
+        },
+      },
+      params: {},
+    };
   },
 
   methods: {
@@ -30,9 +38,9 @@ export default {
       this.params = params;
     },
 
-    resetGame(){
+    resetGame() {
       this.isOngoing = false;
-    }
+    },
   },
 };
 </script>

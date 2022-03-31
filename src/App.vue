@@ -16,10 +16,10 @@ export default {
     Header,
   },
 
-  data: function() {
+  data: function () {
     return {
-      controlsHandler
-    }
+      controlsHandler,
+    };
   },
 
   mounted() {
@@ -33,8 +33,8 @@ export default {
   methods: {
     keydown(event) {
       controlsHandler.event(event.key);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -80,11 +80,24 @@ body {
 }
 
 .button {
+  color: var(--text-primary-color);
   background-color: var(--button-background-color);
   border: 2px solid var(--border-primary-color);
   padding: 10px;
   border-radius: 25px;
   cursor: pointer;
   font-weight: bold;
+  width: fit-content;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 25%;
+  margin: auto;
+  padding: 1%;
+  border: 3px solid var(--border-primary-color);
+  background-color: var(--background-secondary-color);
 }
 </style>

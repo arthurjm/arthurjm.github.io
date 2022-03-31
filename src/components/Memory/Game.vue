@@ -21,9 +21,9 @@
 import Timer from '@/components/Memory/Timer.vue';
 
 const boardSizes = {
-    1: [5, 4],
-    2: [6, 5],
-    3: [7, 6],
+    'Facile': [5, 4],
+    'Intermédiaire': [6, 5],
+    'Difficile': [7, 6],
 };
 
 const emojisList = [

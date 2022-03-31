@@ -1,5 +1,6 @@
 <template>
-  <div id="rythm">
+  <Configuration v-if="!isOngoing" @launchGame="launchGame" :config="config" />
+  <div v-else id="rythm">
     <div id="score">
       <p>Score : {{ score }}</p>
       <p>Multiplicateur : {{ multiplier }}</p>
@@ -38,13 +39,25 @@
 </template>
 
 <script>
+import Configuration from '@/components/Configuration.vue';
 import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
   name: "Rythm",
 
+  components: {
+    Configuration,
+  },
+
   data: function () {
     return {
+      isOngoing: false,
+      config: {
+        time: {
+          name: "Temps (en secondes)",
+          choices: ["60", "120", "180"],
+        },
+      },
       colors: {
         red: false,
         blue: false,
@@ -53,6 +66,7 @@ export default {
         purple: false
       },
       notes: new Map(),
+      time: 0,
       maxNotes: 3,
       id: 0,
       score: 0,
@@ -70,8 +84,6 @@ export default {
     controlsHandler.addControl('rythm', 'greenBtn', {key: 'e', function: this.pressColor, arguments: 'green'});
     controlsHandler.addControl('rythm', 'yellowBtn', {key: 'o', function: this.pressColor, arguments: 'yellow'});
     controlsHandler.addControl('rythm', 'purpleBtn', {key: 'p', function: this.pressColor, arguments: 'purple'});
-
-    this.partition(60 * 1000);
   },
 
   beforeUnmount() {
@@ -80,6 +92,12 @@ export default {
   },
 
   methods: {
+    launchGame(params) {
+      this.time = params.time;
+      this.isOngoing = true;
+      this.partition(this.time * 1000);
+    },
+
     pressColor(color) {
       if (!this.colors[color].display) {
         const lineRect = this.$refs.line.getBoundingClientRect();

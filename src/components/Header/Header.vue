@@ -13,7 +13,7 @@
 <script>
 import ThemeButton from "@/components/Header/ThemeButton.vue";
 
-import Controls from "@/components/Settings/Controls.vue";
+import Controls from "@/components/Controls.vue";
 
 export default {
   name: "Header",
