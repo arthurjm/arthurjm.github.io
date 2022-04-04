@@ -27,12 +27,13 @@ export default {
 
 <style scoped>
 #header {
+  --header-margin: 8px;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
-  margin: 8px;
-  width: -webkit-fill-available;
+  margin: var(--header-margin);
+  width: calc(100% - calc(var(--header-margin) * 2));
 }
 
 #home {

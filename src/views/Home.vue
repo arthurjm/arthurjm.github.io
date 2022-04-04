@@ -1,21 +1,12 @@
 <template>
   <div id="home">
-    <div>
-      <h2>Jeux :</h2>
+    <div v-for="(category, index) in links" :key="index">
+      <h2>{{ category.name }}</h2>
       <ul>
-        <li>
-          <router-link :to="{ name: 'Memory' }">Memory</router-link>
-        </li>
-        <li>
-          <router-link :to="{ name: 'Rythm' }">Rythm</router-link>
-        </li>
-      </ul>
-
-      
-      <h2>Outils :</h2>
-      <ul>
-        <li>
-          <router-link :to="{ name: 'Image' }">Traitement d'images</router-link>
+        <li v-for="(link, index) in category.pages" :key="index">
+          <PageLink
+            :link="link"
+          />
         </li>
       </ul>
     </div>
@@ -23,8 +14,39 @@
 </template>
 
 <script>
+import PageLink from "@/components/PageLink.vue";
+
 export default {
   name: "Home",
+
+  components: {
+    PageLink,
+  },
+
+  data() {
+    return {
+      links: [
+        {
+          name: "Jeux",
+          pages: [
+            { name: "Memory", url: "Memory", desktop: true, mobile: true },
+            { name: "Rythm", url: "Rythm", desktop: true, mobile: false },
+          ],
+        },
+        {
+          name: "Outils",
+          pages: [
+            {
+              name: "Visionneuse d'images",
+              url: "Image",
+              desktop: true,
+              mobile: false,
+            },
+          ],
+        },
+      ],
+    };
+  },
 };
 </script>
 
@@ -39,10 +61,7 @@ ul {
 }
 
 li {
-  margin: 10px;
-}
-
-a {
-  color: var(--text-link-color);
+  margin: 1% auto;
+  width: fit-content;
 }
 </style>

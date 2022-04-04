@@ -91,13 +91,25 @@ body {
 }
 
 .box {
+  --box-margin-horizontal: 2%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25%;
-  margin: auto;
+  margin: var(--box-margin-horizontal) auto;
   padding: 1%;
   border: 3px solid var(--border-primary-color);
   background-color: var(--background-secondary-color);
+}
+
+@media screen and (max-width: 600px) {
+  .box {
+    width: calc(100% - calc(var(--box-margin-horizontal) * 2));
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .box {
+    width: 500px;
+  }
 }
 </style>

@@ -68,5 +68,6 @@ h2 {
 
 select {
   padding: 5px;
+  user-select: none;
 }
 </style>
