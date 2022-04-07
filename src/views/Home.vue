@@ -30,7 +30,7 @@ export default {
           name: "Jeux",
           pages: [
             { name: "Memory", url: "Memory", desktop: true, mobile: true },
-            { name: "Rythm", url: "Rythm", desktop: true, mobile: false },
+            { name: "Rythm", url: "Rythm", desktop: true, mobile: true },
           ],
         },
         {
@@ -52,7 +52,7 @@ export default {
 
 <style scoped>
 #home {
-  margin: auto;
+  margin: 1% auto;
 }
 
 ul {

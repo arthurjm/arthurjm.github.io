@@ -1,7 +1,7 @@
 <template>
   <Configuration v-if="!isOngoing" @launchGame="launchGame" :config="config" />
   <div v-else id="rythm">
-    <div id="score">
+    <div id="score" class="box">
       <p>Score : {{ score }}</p>
       <p>Multiplicateur : {{ multiplier }}</p>
     </div>
@@ -16,16 +16,17 @@
         ></div>
       </div>
 
-      <div id="keys" ref="keys" tabindex="0">
-        <div class="line" ref="line"></div>
+      <div id="keys" ref="keys">
         <div
           v-for="(display, color) in colors"
           :key="color"
-          v-show="display"
-          :class="color"
           class="key"
-        ></div>
+          @touchstart="pressColor(color)"
+        >
+          <div v-visibility="display"></div>
+        </div>
       </div>
+      <div class="line" ref="line"></div>
 
       <div id="separators">
         <div
@@ -39,7 +40,8 @@
 </template>
 
 <script>
-import Configuration from '@/components/Configuration.vue';
+import Configuration from "@/components/Configuration.vue";
+
 import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
@@ -63,7 +65,7 @@ export default {
         blue: false,
         green: false,
         yellow: false,
-        purple: false
+        purple: false,
       },
       notes: new Map(),
       time: 0,
@@ -79,16 +81,36 @@ export default {
   },
 
   created() {
-    controlsHandler.addControl('rythm', 'redBtn', {key: 'a', function: this.pressColor, arguments: 'red'});
-    controlsHandler.addControl('rythm', 'blueBtn', {key: 'z', function: this.pressColor, arguments: 'blue'});
-    controlsHandler.addControl('rythm', 'greenBtn', {key: 'e', function: this.pressColor, arguments: 'green'});
-    controlsHandler.addControl('rythm', 'yellowBtn', {key: 'o', function: this.pressColor, arguments: 'yellow'});
-    controlsHandler.addControl('rythm', 'purpleBtn', {key: 'p', function: this.pressColor, arguments: 'purple'});
+    controlsHandler.addControl("rythm", "redBtn", {
+      key: "a",
+      function: this.pressColor,
+      arguments: "red",
+    });
+    controlsHandler.addControl("rythm", "blueBtn", {
+      key: "z",
+      function: this.pressColor,
+      arguments: "blue",
+    });
+    controlsHandler.addControl("rythm", "greenBtn", {
+      key: "e",
+      function: this.pressColor,
+      arguments: "green",
+    });
+    controlsHandler.addControl("rythm", "yellowBtn", {
+      key: "o",
+      function: this.pressColor,
+      arguments: "yellow",
+    });
+    controlsHandler.addControl("rythm", "purpleBtn", {
+      key: "p",
+      function: this.pressColor,
+      arguments: "purple",
+    });
   },
 
   beforeUnmount() {
     clearInterval(this.partititionId);
-    controlsHandler.removeCategory('rythm');
+    controlsHandler.removeCategory("rythm");
   },
 
   methods: {
@@ -183,103 +205,73 @@ export default {
 </script>
 
 <style scoped>
-#game {
-  --note-width: 100px;
-  --note-height: 50px;
-  --line-width: 5px;
-  --game-width: calc(var(--note-width) * 5 + var(--line-width) * 4);
-  --game-height: 1000px;
+#rythm {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
 
-  margin: auto;
+#score {
+  user-select: none;
+  margin: 0 auto;
+}
+
+#score p {
+  margin: 0;
+}
+
+@media screen and (max-height: 1000px) {
+  #game {
+    margin: auto;
+  }
+}
+
+@media screen and (min-height: 1000px) {
+  #game {
+    margin: 1.5% auto;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  #game {
+    --game-width: 100%;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  #game {
+    --game-width: 500px;
+  }
+}
+
+@media screen and (min-height: 1000px) and (min-width: 600px) {
+  #game {
+    padding: 0;
+    border: solid 3px var(--border-primary-color);
+    border-radius: 7px;
+  }
+}
+
+#game {
+  z-index: 0;
+  --note-width: 20%;
+  --note-height: 5%;
+  --line-width: 1%;
+  --game-height: 100%;
+  position: relative;
   width: var(--game-width);
   height: var(--game-height);
   background-color: grey;
-  border: solid var(--line-width) black;
-  padding: 0;
-  position: relative;
-  z-index: 0;
   user-select: none;
 }
 
-/* Separators */
-#separators {
-  display: flex;
-}
-
-#separators > .separator {
-  position: relative;
-  margin-left: var(--note-width);
-}
-
-.separator {
-  position: absolute;
-  width: var(--line-width);
-  height: var(--game-height);
-  background-color: black;
-  z-index: 2;
-}
-
-/* Colors */
-.red {
-  background-color: red;
-  left: calc((var(--note-width) + var(--line-width)) * 0);
-}
-
-.blue {
-  background-color: blue;
-  left: calc((var(--note-width) + var(--line-width)) * 1);
-}
-
-.green {
-  background-color: green;
-  left: calc((var(--note-width) + var(--line-width)) * 2);
-}
-
-.yellow {
-  background-color: yellow;
-  left: calc((var(--note-width) + var(--line-width)) * 3);
-}
-
-.purple {
-  background-color: purple;
-  left: calc((var(--note-width) + var(--line-width)) * 4);
-}
-
 /* Notes */
-#notes {
-  position: relative;
-}
-
 .note {
+  z-index: 1;
   position: absolute;
   width: var(--note-width);
   height: var(--note-height);
-  z-index: 1;
   animation: 4s linear 0s infinite drop;
-}
-
-/* Keys */
-#keys {
-  position: relative;
-}
-
-.line,
-.key {
-  position: absolute;
-  top: calc(var(--game-height) * 0.85);
-  height: calc(var(--line-width) * 3);
-}
-
-.line {
-  width: var(--game-width);
-  background-color: black;
-  z-index: 2;
-}
-
-.key {
-  width: var(--note-width);
-  background-color: white;
-  z-index: 3;
 }
 
 @keyframes drop {
@@ -289,5 +281,86 @@ export default {
   to {
     top: calc(var(--game-height) - var(--note-height));
   }
+}
+
+/* Colors */
+.red {
+  background-color: red;
+  left: calc((var(--note-width)) * 0);
+}
+
+.blue {
+  background-color: blue;
+  left: calc((var(--note-width)) * 1);
+}
+
+.green {
+  background-color: green;
+  left: calc((var(--note-width)) * 2);
+}
+
+.yellow {
+  background-color: yellow;
+  left: calc((var(--note-width)) * 3);
+}
+
+.purple {
+  background-color: purple;
+  left: calc((var(--note-width)) * 4);
+}
+
+/* Keys and line*/
+#keys {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.line {
+  z-index: 2;
+  background-color: black;
+}
+
+.key > div,
+.line {
+  position: absolute;
+  width: 100%;
+  top: calc(var(--game-height) * 0.8);
+  height: calc(var(--line-width) * 2);
+}
+
+#keys {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.key {
+  z-index: 3;
+  width: 100%;
+}
+
+.key > div {
+  width: var(--note-width);
+  background-color: white;
+}
+
+/* Separators */
+#separators {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  height: 100%;
+  width: 100%;
+}
+
+.separator {
+  z-index: 4;
+  width: calc(var(--line-width) * 1.2);
+  height: 100%;
+  background-color: black;
 }
 </style>

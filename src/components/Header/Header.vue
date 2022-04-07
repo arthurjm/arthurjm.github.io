@@ -34,13 +34,14 @@ export default {
   justify-content: flex-end;
   margin: var(--header-margin);
   width: calc(100% - calc(var(--header-margin) * 2));
+  height: calc(2vh + var(--header-margin) * 2);
 }
 
 #home {
   margin-right: auto;
 }
 
-a {
+#header a {
   color: var(--text-primary-color);
 }
 </style>

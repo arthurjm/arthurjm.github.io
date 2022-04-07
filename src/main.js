@@ -13,4 +13,7 @@ library.add(faSun, faMoon, faHouse, faKeyboard, faFileArrowDown, faTrashCan, faR
 createApp(App)
     .component('font-awesome-icon', FontAwesomeIcon)
     .use(router)
+    .directive('visibility', (el, binding) => {
+        el.style.visibility = binding.value === true ? 'visible' : 'hidden';
+    })
     .mount('#app')

@@ -60,7 +60,7 @@ export default {
   --background-primary-color: #1e1e1e;
   --background-secondary-color: #2d2d30;
   --background-tertiary-color: #4d4d4d;
-  --border-primary-color: #ebebeb;
+  --border-primary-color: #d6d6d6;
   --button-background-color: #215292;
   --accent-color: #3f3f3f;
 }
@@ -77,6 +77,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .button {
