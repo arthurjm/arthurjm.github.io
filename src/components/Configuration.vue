@@ -21,7 +21,7 @@
 
 <script>
 export default {
-  name: "Configuration",
+  name: "configure-component",
 
   props: ["config"],
 

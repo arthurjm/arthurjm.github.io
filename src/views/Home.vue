@@ -4,9 +4,7 @@
       <h2>{{ category.name }}</h2>
       <ul>
         <li v-for="(link, index) in category.pages" :key="index">
-          <PageLink
-            :link="link"
-          />
+          <PageLink :link="link" />
         </li>
       </ul>
     </div>
@@ -17,7 +15,7 @@
 import PageLink from "@/components/PageLink.vue";
 
 export default {
-  name: "Home",
+  name: "home-view",
 
   components: {
     PageLink,

@@ -11,7 +11,7 @@ import Game from "@/components/Memory/Game.vue";
 import Scoreboard from "@/components/Memory/Scoreboard.vue";
 
 export default {
-  name: "Memory",
+  name: "memory-view",
 
   components: {
     Game,

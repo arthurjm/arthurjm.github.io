@@ -21,12 +21,12 @@
 import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
-  name: "ThemeButton",
+  name: "theme-button",
 
   data() {
     return {
       userTheme: "light-theme",
-      controlsHandler
+      controlsHandler,
     };
   },
 
@@ -40,8 +40,11 @@ export default {
       ).matches;
       this.setTheme(hasDarkPreference ? "dark-theme" : "light-theme");
     }
-    
-    controlsHandler.addControl('general', 'changeTheme', {key: 'n', function: this.toggleTheme});
+
+    controlsHandler.addControl("general", "changeTheme", {
+      key: "n",
+      function: this.toggleTheme,
+    });
   },
 
   methods: {

@@ -3,20 +3,20 @@
 </template>
 
 <script>
-import { formatTimeZero } from '@/js/time.js';
+import { formatTimeZero } from "@/js/time.js";
 
 export default {
-  name: 'Timer',
+  name: "timer-component",
 
-  props: ['timerStop'],
+  props: ["timerStop"],
 
-  emits: ['timer'],
+  emits: ["timer"],
 
-  data: function() {
+  data: function () {
     return {
       intervalId: null,
       ellapsed: 0,
-    }
+    };
   },
 
   created() {
@@ -25,9 +25,9 @@ export default {
         clearInterval(this.intervalId);
       } else {
         this.ellapsed++;
-        this.$emit('timer', this.ellapsed);
+        this.$emit("timer", this.ellapsed);
       }
-    }, 1000)
+    }, 1000);
   },
 
   beforeUnmount() {
@@ -38,9 +38,9 @@ export default {
     displayEllapsed() {
       const minutes = Math.floor(this.ellapsed / 60);
       const seconds = this.ellapsed % 60;
-      
+
       return `${formatTimeZero(minutes)}:${formatTimeZero(seconds)}`;
     },
-  }
-}
+  },
+};
 </script>

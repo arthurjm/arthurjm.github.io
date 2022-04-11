@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "PageLink",
+  name: "page-link-component",
 
   props: ["link"],
 
