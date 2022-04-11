@@ -38,7 +38,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 :root {
   --element-size: 4rem;
   --text-link-color: #366fd1;

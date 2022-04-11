@@ -38,6 +38,13 @@ const routes = [
     },
   },
   {
+    path: "/css",
+    name: "CSS",
+    component: () => {
+      return import("@/views/CSS.vue");
+    },
+  },
+  {
     path: "/:catchAll(.*)",
     name: "NotFound",
     redirect: "/",

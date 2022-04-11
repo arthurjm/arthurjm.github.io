@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #header {
   --header-margin: 8px;
   position: relative;

@@ -37,7 +37,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 a {
   color: var(--text-primary-color);
   text-decoration: none;
