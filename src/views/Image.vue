@@ -225,7 +225,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #image-vue {
   position: relative;
 }

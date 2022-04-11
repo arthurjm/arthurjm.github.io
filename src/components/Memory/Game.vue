@@ -236,7 +236,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .game {
   user-select: none;
   touch-action: manipulation;

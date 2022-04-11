@@ -204,7 +204,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #rythm {
   display: flex;
   flex-direction: column;

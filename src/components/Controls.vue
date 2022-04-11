@@ -58,7 +58,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #controls {
   margin-right: 1%;
 }

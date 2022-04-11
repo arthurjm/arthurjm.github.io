@@ -65,7 +65,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #themeButton {
   text-align: -webkit-right;
   user-select: none;
