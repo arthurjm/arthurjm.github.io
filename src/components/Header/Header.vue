@@ -16,7 +16,7 @@ import ThemeButton from "@/components/Header/ThemeButton.vue";
 import Controls from "@/components/Controls.vue";
 
 export default {
-  name: "Header",
+  name: "header-component",
 
   components: {
     ThemeButton,

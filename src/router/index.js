@@ -1,52 +1,52 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: () => {
-            return import('@/views/Home.vue');
-        },
-        props: true
+  {
+    path: "/",
+    name: "Home",
+    component: () => {
+      return import("@/views/Home.vue");
     },
-    {
-        path: '/helloworld',
-        name: 'HelloWorld',
-        component: () => {
-            return import('@/views/HelloWorld.vue');
-        }
+    props: true,
+  },
+  {
+    path: "/helloworld",
+    name: "HelloWorld",
+    component: () => {
+      return import("@/views/HelloWorld.vue");
     },
-    {
-        path: '/memory',
-        name: 'Memory',
-        component: () => {
-            return import('@/views/Memory.vue');
-        }
+  },
+  {
+    path: "/memory",
+    name: "Memory",
+    component: () => {
+      return import("@/views/Memory.vue");
     },
-    {
-        path: '/rythm',
-        name: 'Rythm',
-        component: () => {
-            return import('@/views/Rythm.vue');
-        }
+  },
+  {
+    path: "/rythm",
+    name: "Rythm",
+    component: () => {
+      return import("@/views/Rythm.vue");
     },
-    {
-        path: '/image',
-        name: 'Image',
-        component: () => {
-            return import('@/views/Image.vue');
-        }
+  },
+  {
+    path: "/image",
+    name: "Image",
+    component: () => {
+      return import("@/views/Image.vue");
     },
-    {
-        path: '/:catchAll(.*)',
-        name: 'NotFound',
-        redirect: '/'
-    },
-]
+  },
+  {
+    path: "/:catchAll(.*)",
+    name: "NotFound",
+    redirect: "/",
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
-})
+  history: createWebHistory(process.env.BASE_URL),
+  routes,
+});
 
-export default router
+export default router;

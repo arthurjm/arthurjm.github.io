@@ -7,18 +7,18 @@
       size="2x"
     />
     <div id="controls-menu" v-show="display">
-      <div v-for="(category, cat) in controlsHandler.controls" :key="cat" class="category">
-          <div>{{ cat }}</div>
-          <div
-            v-for="(control, name) in category"
-            :key="name"
-            class="control"
-          >
-            <div class="control-name">{{ names[name] }}</div>
-            <button class="control-key" @click="updateKey(cat, name)">
-              {{ control.key }}
-            </button>
-          </div>
+      <div
+        v-for="(category, cat) in controlsHandler.controls"
+        :key="cat"
+        class="category"
+      >
+        <div>{{ cat }}</div>
+        <div v-for="(control, name) in category" :key="name" class="control">
+          <div class="control-name">{{ names[name] }}</div>
+          <button class="control-key" @click="updateKey(cat, name)">
+            {{ control.key }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@ import { names } from "@/js/actionNames.js";
 import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
-  name: "Controls",
+  name: "controls-component",
 
   data: function () {
     return {

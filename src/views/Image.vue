@@ -56,7 +56,7 @@
 
 <script>
 export default {
-  name: "Image",
+  name: "image-view",
 
   components: {},
 
@@ -76,7 +76,7 @@ export default {
       },
       zoom: 1,
       angle: 0,
-      
+
       move: false,
     };
   },
@@ -155,7 +155,7 @@ export default {
 
       this.img.addEventListener("load", () => {
         this.render();
-      })
+      });
 
       reader.readAsDataURL(file);
     },

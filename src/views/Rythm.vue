@@ -45,7 +45,7 @@ import Configuration from "@/components/Configuration.vue";
 import { controlsHandler } from "@/js/controlsHandler.js";
 
 export default {
-  name: "Rythm",
+  name: "rythm-view",
 
   components: {
     Configuration,
