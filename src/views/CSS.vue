@@ -1,96 +1,36 @@
 <template>
-  <div id="main">
-    <div id="actions" class="box">
-      <label
-        >Couleur<button @click="changeColor">
-          <font-awesome-icon icon="dice" size="2x" />
-        </button>
-        <input type="range" name="hue" min="0" max="360" v-model="hue" />
-      </label>
-      <label
-        >Largeur<input
-          type="range"
-          name="width"
-          min="100"
-          max="500"
-          v-model="widthValue"
-      /></label>
-      <label
-        >Hauteur<input
-          type="range"
-          name="height"
-          min="100"
-          max="500"
-          v-model="heightValue"
-      /></label>
-      <label
-        >Rotation<input
-          type="range"
-          name="height"
-          min="0"
-          max="360"
-          v-model="angle"
-      /></label>
-    </div>
-    <div class="rectangle"></div>
-  </div>
+  <select id="demo-select" class="box" v-model="selectedDemo">
+    <option value="none">Sélectionnez une démo</option>
+    <option v-for="demo in demos" :key="demo">{{ demo }}</option>
+  </select>
+  <Bind v-if="selectedDemo === 'Bind'" />
+  <Firework v-if="selectedDemo === 'Firework'" />
 </template>
 
 <script>
+import Bind from "@/components/CSS/Bind.vue";
+import Firework from "@/components/CSS/Firework.vue";
+
 export default {
   name: "css-demo",
-  components: {},
+
+  components: {
+    Bind,
+    Firework,
+  },
+
   data: function () {
     return {
-      hue: 0,
-      widthValue: 250,
-      heightValue: 250,
-      angle: 0,
+      demos: ["Bind", "Firework"],
+      selectedDemo: "none",
     };
-  },
-  methods: {
-    changeColor() {
-      this.hue = Math.floor(Math.random() * 360);
-    },
-  },
-  computed: {
-    color() {
-      return `hsl(${this.hue}, 100%, 50%)`;
-    },
-    width() {
-      return `${this.widthValue}px`;
-    },
-    height() {
-      return `${this.heightValue}px`;
-    },
-    rotate() {
-      return `rotate(${this.angle}deg)`;
-    },
   },
 };
 </script>
 
-<style lang="scss">
-#actions {
-  z-index: 1;
-  position: relative;
-  width: 300px;
-}
-
-label {
-  z-index: 1;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.rectangle {
-  z-index: 0;
+<style lang="scss" scoped>
+select {
+  color: var(--text-color);
   margin: 1% auto;
-  width: v-bind(width);
-  height: v-bind(height);
-  background-color: v-bind(color);
-  transform: v-bind(rotate);
 }
 </style>
