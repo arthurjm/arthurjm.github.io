@@ -60,6 +60,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use "sass:math";
+
 @mixin keyframes($animationName) {
   @-webkit-keyframes #{$animationName} {
     @content;
@@ -127,6 +129,7 @@ label {
   user-select: none;
 }
 
+$radius: 150;
 $particles: 50;
 $width: 500;
 $height: 500;
@@ -136,14 +139,16 @@ $box-shadow-color: ();
 $box-shadow-white: ();
 
 @for $i from 0 through $particles {
+  $r: $radius * math.sqrt(math.random());
+  $theta: math.random() * 2 * math.$pi;
+
   $box-shadow-color: $box-shadow-color,
-    random($width)-$width /
-      2 +
+    ($r * math.cos($theta)) +
       px
-      random($height)-$height /
-      1.2 +
+      ($r * math.sin($theta)) +
       px
       hsl(random(360), 100, 50);
+
   $box-shadow-white: $box-shadow-white, 0 0 #fff;
 }
 
