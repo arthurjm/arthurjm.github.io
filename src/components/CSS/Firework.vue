@@ -1,15 +1,36 @@
 <template>
   <div id="demo">
-    <div v-if="false" id="actions" class="box">
-      <!-- <div><a href="https://codepen.io/hmaw/pen/qBEMLxV">Lien</a></div> -->
-      <!-- <label
+    <div v-if="true" id="actions" class="box">
+      <label v-if="false"
         >Nombre de particules<input
           type="range"
           name="particles"
           min="10"
           max="100"
           v-model="particles"
-      /></label> -->
+      /></label>
+
+      <label
+        >Intervale d'apparition<input
+          type="range"
+          min="100"
+          max="1000"
+          v-model.number="time"
+      /></label>
+
+      <div>Animations :</div>
+      <div v-for="(animation, i) in animations" :key="i">
+        <p>{{ i.charAt(0).toUpperCase() + i.slice(1) }}</p>
+
+        <label v-for="(property, p) in animation" :key="p"
+          >{{ p.charAt(0).toUpperCase() + p.slice(1) }} ({{ property }})<input
+            type="range"
+            min="0"
+            max="2"
+            step="0.1"
+            v-model="animation[p]"
+        /></label>
+      </div>
     </div>
     <div id="display">
       <div
@@ -31,29 +52,51 @@ export default {
       id: 0,
       fireworks: new Map(),
       particles: 50,
+      time: 300,
+      animations: {
+        bang: {
+          duration: 1,
+          delay: 1,
+        },
+        gravity: {
+          duration: 1,
+          delay: 1,
+        },
+      },
     };
   },
 
   mounted() {
-    setInterval(() => {
-      this.addFirework();
-    }, 300);
+    this.interval();
   },
 
   methods: {
     addFirework() {
       const key = this.id++;
-      const time = 500 + Math.floor(Math.random() * 800);
+      // const time = 500 + Math.floor(Math.random() * 800);
+      const time = 5000;
       const top = Math.floor(Math.random() * 25 + 25);
       const left = Math.floor(Math.random() * 70 + 15);
       this.fireworks.set(key, {
         top: `${top}%`,
         left: `${left}%`,
-        "animation-duration": `${(time / 1000).toFixed(1)}s`,
+        "animation-duration": `${this.animations.bang.duration}s, ${this.animations.gravity.duration}s`,
+        "animation-delay": `${this.animations.bang.delay}s, ${this.animations.gravity.delay}s`,
       });
       setTimeout(() => {
         this.fireworks.delete(key);
       }, time);
+    },
+
+    interval() {
+      const time = this.time;
+      const intervalId = setInterval(() => {
+        this.addFirework();
+        if (time !== this.time) {
+          clearInterval(intervalId);
+          this.interval();
+        }
+      }, this.time);
     },
   },
 };
@@ -109,7 +152,7 @@ export default {
 #actions {
   z-index: 1;
   position: relative;
-  width: 300px;
+  width: 400px;
   margin: 1% auto;
 }
 
@@ -129,8 +172,8 @@ label {
   user-select: none;
 }
 
-$radius: 150;
-$particles: 50;
+$radius: 200;
+$particles: 100;
 $width: 500;
 $height: 500;
 
