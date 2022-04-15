@@ -42,6 +42,17 @@ export default {
             },
           ],
         },
+        {
+          name: "Démos",
+          pages: [
+            {
+              name: "CSS",
+              url: "CSS",
+              desktop: true,
+              mobile: false,
+            },
+          ],
+        },
       ],
     };
   },
