@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <div class="control-panel-section">
     <h3>
-      {{ data.name }}
+      {{ name }}
     </h3>
     <Control
-      v-for="(d, i) in data.content"
+      v-for="(d, i) in data"
       :key="i"
       :data="d"
+      :name="i"
       @update:data="(d) => $emit('update:data', d)"
     />
   </div>
@@ -22,10 +23,20 @@ export default {
     Control,
   },
 
-  props: ["data"],
+  props: ["data", "name"],
 
   emits: ["update:data"],
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.control-panel-section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+h3::first-letter {
+  text-transform: uppercase;
+}
+</style>

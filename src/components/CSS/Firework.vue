@@ -27,67 +27,64 @@ export default {
       id: 0,
       fireworks: new Map(),
 
-      controls: [
-        {
-          name: "Général",
-          content: [
-            {
-              name: "Intervalle d'apparition",
-              type: "InputRange",
-              min: 100,
-              max: 1000,
-              step: 1,
-              value: 300,
-              unit: "ms",
-            },
-          ],
+      controls: {
+        general: {
+          spawnInterval: {
+            name: "Intervalle d'apparition",
+            type: "InputRange",
+            min: 100,
+            max: 1000,
+            step: 1,
+            value: 300,
+            unit: "ms",
+          },
         },
-        {
-          name: "Animations",
-          content: [
-            {
-              name: "Bang duration",
-              type: "InputRange",
-              min: 0.1,
-              max: 2,
-              step: 0.1,
-              value: 1,
-              unit: "s",
-            },
-            {
-              name: "Bang delay",
-              type: "InputRange",
-              min: 0.1,
-              max: 2,
-              step: 0.1,
-              value: 1,
-              unit: "s",
-            },
-            {
-              name: "Gravity duration",
-              type: "InputRange",
-              min: 0.1,
-              max: 2,
-              step: 0.1,
-              value: 1,
-              unit: "s",
-            },
-            {
-              name: "Gravity delay",
-              type: "InputRange",
-              min: 0.1,
-              max: 2,
-              step: 0.1,
-              value: 1,
-              unit: "s",
-            },
-          ],
+        bang: {
+          duration: {
+            name: "Bang duration",
+            type: "InputRange",
+            min: 0,
+            max: 2,
+            step: 0.1,
+            value: 0.7,
+            unit: "s",
+          },
+          delay: {
+            name: "Bang delay",
+            type: "InputRange",
+            min: 0,
+            max: 2,
+            step: 0.1,
+            value: 0,
+            unit: "s",
+          },
         },
-      ],
+        gravity: {
+          duration: {
+            name: "Gravity duration",
+            type: "InputRange",
+            min: 0,
+            max: 2,
+            step: 0.1,
+            value: 1,
+            unit: "s",
+          },
+          delay: {
+            name: "Gravity delay",
+            type: "InputRange",
+            min: 0,
+            max: 2,
+            step: 0.1,
+            value: 0.3,
+            unit: "s",
+          },
+        },
+      },
     };
   },
 
   mounted() {
+    this.addFirework();
     this.interval();
   },
 
@@ -110,32 +107,32 @@ export default {
     },
 
     interval() {
-      const time = this.fireworksInterval;
+      const time = this.spawnInterval;
       const intervalId = setInterval(() => {
         this.addFirework();
-        if (time !== this.fireworksInterval) {
+        if (time !== this.spawnInterval) {
           clearInterval(intervalId);
           this.interval();
         }
-      }, this.fireworksInterval);
+      }, this.spawnInterval);
     },
   },
 
   computed: {
     animationDuration() {
-      const bangDuration = this.controls[1].content[0].value;
-      const gravityDuration = this.controls[1].content[2].value;
+      const bangDuration = this.controls.bang.duration.value;
+      const gravityDuration = this.controls.gravity.duration.value;
       return `${bangDuration}s, ${gravityDuration}s`;
     },
 
     animationDelay() {
-      const bangDuration = this.controls[1].content[1].value;
-      const gravityDuration = this.controls[1].content[3].value;
+      const bangDuration = this.controls.bang.delay.value;
+      const gravityDuration = this.controls.gravity.delay.value;
       return `${bangDuration}s, ${gravityDuration}s`;
     },
 
-    fireworksInterval() {
-      return this.controls[0].content[0].value;
+    spawnInterval() {
+      return this.controls.general.spawnInterval.value;
     },
   },
 };
