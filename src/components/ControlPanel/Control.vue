@@ -1,6 +1,6 @@
 <template>
-  <div>
-    {{ data.name }} ({{ data.value }}{{ data.unit }})
+  <div class="control-panel-input">
+    <label>{{ data.name }} ({{ data.value }}{{ data.unit }})</label>
     <InputRange
       v-if="data.type === 'InputRange'"
       :data="data"
@@ -19,7 +19,7 @@ export default {
     InputRange,
   },
 
-  props: ["data"],
+  props: ["data", "name"],
 
   emits: ["update:data"],
 
@@ -33,4 +33,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.control-panel-input {
+  display: flex;
+  justify-content: space-between;
+}
+</style>

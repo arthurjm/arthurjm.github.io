@@ -18,6 +18,7 @@ import {
   faDesktop,
   faMobileScreenButton,
   faDice,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -35,7 +36,8 @@ library.add(
   faMinus,
   faDesktop,
   faMobileScreenButton,
-  faDice
+  faDice,
+  faArrowRight
 );
 
 createApp(App)

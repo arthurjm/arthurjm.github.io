@@ -19,9 +19,8 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 input {
-  background-color: green;
-  width: 100%;
+  background-color: blue;
 }
 </style>
