@@ -1,37 +1,6 @@
 <template>
   <div id="demo">
-    <div v-if="true" id="actions" class="box">
-      <label v-if="false"
-        >Nombre de particules<input
-          type="range"
-          name="particles"
-          min="10"
-          max="100"
-          v-model="particles"
-      /></label>
-
-      <label
-        >Intervale d'apparition<input
-          type="range"
-          min="100"
-          max="1000"
-          v-model.number="time"
-      /></label>
-
-      <div>Animations :</div>
-      <div v-for="(animation, i) in animations" :key="i">
-        <p>{{ i.charAt(0).toUpperCase() + i.slice(1) }}</p>
-
-        <label v-for="(property, p) in animation" :key="p"
-          >{{ p.charAt(0).toUpperCase() + p.slice(1) }} ({{ property }})<input
-            type="range"
-            min="0"
-            max="2"
-            step="0.1"
-            v-model="animation[p]"
-        /></label>
-      </div>
-    </div>
+    <ControlPanel :data="controls" />
     <div id="display">
       <div
         v-for="[k, t] in fireworks"
@@ -44,25 +13,77 @@
 </template>
 
 <script>
+import ControlPanel from "@/components/ControlPanel/ControlPanel.vue";
+
 export default {
   name: "firework-demo",
+
+  components: {
+    ControlPanel,
+  },
 
   data: function () {
     return {
       id: 0,
       fireworks: new Map(),
-      particles: 50,
-      time: 300,
-      animations: {
-        bang: {
-          duration: 1,
-          delay: 1,
+
+      controls: [
+        {
+          name: "Général",
+          content: [
+            {
+              name: "Intervalle d'apparition",
+              type: "InputRange",
+              min: 100,
+              max: 1000,
+              step: 1,
+              value: 300,
+              unit: "ms",
+            },
+          ],
         },
-        gravity: {
-          duration: 1,
-          delay: 1,
+        {
+          name: "Animations",
+          content: [
+            {
+              name: "Bang duration",
+              type: "InputRange",
+              min: 0.1,
+              max: 2,
+              step: 0.1,
+              value: 1,
+              unit: "s",
+            },
+            {
+              name: "Bang delay",
+              type: "InputRange",
+              min: 0.1,
+              max: 2,
+              step: 0.1,
+              value: 1,
+              unit: "s",
+            },
+            {
+              name: "Gravity duration",
+              type: "InputRange",
+              min: 0.1,
+              max: 2,
+              step: 0.1,
+              value: 1,
+              unit: "s",
+            },
+            {
+              name: "Gravity delay",
+              type: "InputRange",
+              min: 0.1,
+              max: 2,
+              step: 0.1,
+              value: 1,
+              unit: "s",
+            },
+          ],
         },
-      },
+      ],
     };
   },
 
@@ -80,8 +101,8 @@ export default {
       this.fireworks.set(key, {
         top: `${top}%`,
         left: `${left}%`,
-        "animation-duration": `${this.animations.bang.duration}s, ${this.animations.gravity.duration}s`,
-        "animation-delay": `${this.animations.bang.delay}s, ${this.animations.gravity.delay}s`,
+        "animation-duration": this.animationDuration,
+        "animation-delay": this.animationDelay,
       });
       setTimeout(() => {
         this.fireworks.delete(key);
@@ -89,14 +110,32 @@ export default {
     },
 
     interval() {
-      const time = this.time;
+      const time = this.fireworksInterval;
       const intervalId = setInterval(() => {
         this.addFirework();
-        if (time !== this.time) {
+        if (time !== this.fireworksInterval) {
           clearInterval(intervalId);
           this.interval();
         }
-      }, this.time);
+      }, this.fireworksInterval);
+    },
+  },
+
+  computed: {
+    animationDuration() {
+      const bangDuration = this.controls[1].content[0].value;
+      const gravityDuration = this.controls[1].content[2].value;
+      return `${bangDuration}s, ${gravityDuration}s`;
+    },
+
+    animationDelay() {
+      const bangDuration = this.controls[1].content[1].value;
+      const gravityDuration = this.controls[1].content[3].value;
+      return `${bangDuration}s, ${gravityDuration}s`;
+    },
+
+    fireworksInterval() {
+      return this.controls[0].content[0].value;
     },
   },
 };
@@ -147,13 +186,6 @@ export default {
   height: 100%;
   overflow: hidden;
   position: relative;
-}
-
-#actions {
-  z-index: 1;
-  position: relative;
-  width: 400px;
-  margin: 1% auto;
 }
 
 label {
